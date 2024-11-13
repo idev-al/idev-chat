@@ -34,7 +34,7 @@ st.markdown("""
 
 # Initialize chat history
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "How can I help you today?"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Ask me a question about Sistema.bio"}]
 
 # Google Drive API setup
 def fetch_files_from_drive(folder_id):
@@ -91,14 +91,14 @@ def extract_text_from_pdf(file):
 # Load data from Google Drive
 @st.cache_resource(show_spinner=False)
 def load_data():
-    folder_id = "1p9H982LnozcFoP7ieuLfMNBepb2PdyR2"  # Google Drive folder ID
+    folder_id = "1z1-oqJxOgRT9NOs047FK9LO6Y89ZxksB"  # Google Drive folder ID
     docs_content = fetch_files_from_drive(folder_id)
     
     # Initialize and configure LLM
     Settings.llm = OpenAI(
         model="gpt-4o-mini",
         temperature=0.2,
-        system_prompt="""You are an expert on Sistema.bio.
+system_prompt="""You are an expert on Sistema.bio.
     Your primary job is to answer technical questions based on the context of the uploaded documents. Keep answers short and factual.
     However, if the answer to a question isn't found in the documents, please provide a contact us link: https://sistema.bio/contact-us/"""
     )
@@ -120,7 +120,7 @@ if prompt := st.chat_input("Ask a question"):
 for message in st.session_state.messages:
     if message["role"] == "assistant":
         # Use the URL directly for the assistant's avatar
-        avatar_url = "https://www.jlblawgroup.com/wp-content/uploads/2024/08/cropped-faviconV2-192x192.png"
+        avatar_url = "https://sistema.bio/wp-content/uploads/2024/05/favicon-150x150.png"
     else:
         avatar_url = None  # No avatar for the user or you can set another URL
 
@@ -129,9 +129,8 @@ for message in st.session_state.messages:
 
 # If last message is from user, generate a response
 if st.session_state.messages[-1]["role"] == "user":
-    with st.chat_message("assistant", avatar="https://www.jlblawgroup.com/wp-content/uploads/2024/08/cropped-faviconV2-192x192.png"):
+    with st.chat_message("assistant", avatar="https://sistema.bio/wp-content/uploads/2024/05/favicon-150x150.png"):
         response_stream = st.session_state.chat_engine.stream_chat(prompt)
         st.write_stream(response_stream.response_gen)
         response_message = {"role": "assistant", "content": response_stream.response}
         st.session_state.messages.append(response_message)
-
