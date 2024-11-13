@@ -91,7 +91,7 @@ def extract_text_from_pdf(file):
 # Load data from Google Drive
 @st.cache_resource(show_spinner=False)
 def load_data():
-    folder_id = "1z1-oqJxOgRT9NOs047FK9LO6Y89ZxksB"  # Google Drive folder ID
+    folder_id = "1p9H982LnozcFoP7ieuLfMNBepb2PdyR2"  # Google Drive folder ID
     docs_content = fetch_files_from_drive(folder_id)
     
     # Initialize and configure LLM
